@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
-  <!-- Print ZPL files -->
-  <customer
-		container_print="AZURE CONTAINERNAME"
-		printer_name="ZEBRA PRINTER"
+	<main>
+		<storageaccount>azertylaketest</storageaccount>
+		<saskey>sp=rawdl&amp;st=2024-10-28T15:35:49Z&amp;se=2099-10-28T23:35:49Z&amp;spr=https&amp;sv=2022-11-02&amp;sr=c&amp;sig=kGV%2FsgH2gn6SVANaux%2FqNk9%2FgXFyOnUy1O6XBY%2FGqow%3D</saskey>
+		<glabelspath>D:\Tools\glabels-3.99.0\bin\glabels-batch-qt.exe</glabelspath>
+		<templatepath>D:\Tools\LabelTemplates</templatepath>
+	</main>
+	<!-- Print ZPL files -->
+	<customer
+		  container_print="labelprint"
+		  printer_name="HP3946FF.lan (HP OfficeJet Pro 8020 series)"
+	/>
+	<customer
+		  container_printzpl="labelprint"
+		  printer_name="HP3946FF.lan (HP OfficeJet Pro 8020 series)"
 	/>
 </config>

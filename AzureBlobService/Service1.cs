@@ -8,8 +8,8 @@ namespace AzureBlobService
 {
     public partial class Service1 : ServiceBase
     {
-        Timer timer = new Timer();
-        Log log = new Log();
+        readonly Timer timer = new Timer();
+        readonly Log log = new Log();
 
         public Service1()
         {
@@ -32,7 +32,7 @@ namespace AzureBlobService
             timer.Stop();
             log.Add("Azure_Blob_Service stopped");
         }
-        internal void TestStartupAndStop(string[] args)
+        internal void TestStartupAndStop()
         {
             //this.OnStart(args);
             DoEvents();
@@ -51,7 +51,6 @@ namespace AzureBlobService
         {
             try
             {
-                AzureStorage azureStorage = new AzureStorage();
                 Config config = new Config();
                 XmlDocument xdConfig = new XmlDocument();
 
@@ -65,8 +64,9 @@ namespace AzureBlobService
                     return;
                 }
 
+                AzureStorage azureStorage = new AzureStorage(config.StorageAccount, config.SasKey);
                 XmlNodeList xnlFtp = xdConfig.GetElementsByTagName("customer");
-                log.Add(String.Format("Found {0} tasks", xnlFtp.Count));
+                log.Add($"Found {xnlFtp.Count} tasks");
 
                 for (int i = 0; i < xnlFtp.Count; i++)
                 {
@@ -77,11 +77,6 @@ namespace AzureBlobService
 
                     if (ConfigAttributeExists(ftpNode, "container_upload") && ConfigAttributeExists(ftpNode, "upload_folder"))
                         azureStorage.UploadAll(ftpNode.Attributes["container_upload"].Value, ftpNode.Attributes["upload_folder"].Value);
-
-                    /*if (ConfigAttributeExists(ftpNode, "webservice"))
-                    {
-                        DynamicWebservice.Consume(ftpNode.Attributes["webservice"].Value, log);
-                    }*/
 
                     if (ConfigAttributeExists(ftpNode, "container_print"))
                         azureStorage.PrintAll(ftpNode.Attributes["container_print"].Value, ftpNode.Attributes["printer_name"].Value);

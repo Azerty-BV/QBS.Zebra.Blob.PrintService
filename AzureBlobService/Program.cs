@@ -25,7 +25,7 @@ namespace AzureBlobService
                         break;
                     default:
                         var service = new Service1();
-                        service.TestStartupAndStop(args);
+                        service.TestStartupAndStop();
                         break;
                 }
             }
